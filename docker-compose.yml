@@ -1,0 +1,24 @@
+version: "3.2"
+
+services:
+  local:
+    build: .
+    image: go-package-template
+    volumes:
+      - ./:/go
+
+  test:
+    build: .
+    image: go-package-template
+    entrypoint: go test -v
+    volumes:
+      - ./:/go
+
+  bundle:
+    build: .
+    image: go-package-template
+
+  bundle-test:
+    build: .
+    image: go-package-template
+    entrypoint: go test -v

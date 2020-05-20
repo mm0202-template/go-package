@@ -1,0 +1,29 @@
+name: test
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+
+      - run: go test -v
+
+      - run: go get github.com/${{ github.repository }}
+
+      - run: |
+          repo_name=$(echo ${{ github.repository }} | sed -e "s/${{ github.repository_owner }}\///")
+          ~/go/bin/$repo_name
+
+      # - name: notify to slack
+      #   uses: mm0202/action_slack-notify@master
+      #   if: always()
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
